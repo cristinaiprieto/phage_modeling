@@ -19,13 +19,13 @@ def rt_dicts(path, strn_or_phg='strain', seq_report=False, test_mode=False):
                 data[fname] = {"base_pairs": seq}
     return data
 
-def save_to_dir(path, embeddings, pads, name, strn_or_phage):
+def save_to_dir(path, embeddings, pads, strn_or_phage):
     """
     Save embeddings to a directory.
     """
     os.makedirs(path, exist_ok=True)
-    torch.save(embeddings, os.path.join(path, f"{name}_{strn_or_phage}_embeddings.pt"))
-    torch.save(pads, os.path.join(path, f"{name}_{strn_or_phage}_pads.pt"))
+    torch.save(embeddings, os.path.join(path, f"{strn_or_phage}_embeddings.pt"))
+    torch.save(pads, os.path.join(path, f"{strn_or_phage}_pads.pt"))
 
 def complete_n_select(data_dict, context_len):
     chunked = {}

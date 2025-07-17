@@ -19,6 +19,7 @@ class ProteinPipelineConfig():
         self.stage_names = {
             1: "Embedding", 
         }
+        self.conda_env = "phage_modeling_env"
 
     def check_stage_completion(self, stage):
         marker = self.completion_markers.get(stage)
@@ -88,9 +89,13 @@ echo "Completed: $ (date)"
 
 def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
-    parser.add_argument('--input_fasta', required=True)
-    parser.add_argument('--output_npz', required=True)
-    parser.add_argument('--output', required=True)
+    parser.add_argument('--strain_in', required=True)
+    parser.add_argument('--strain_out', required=True)
+    parser.add_argument('--phage_in', required=True)
+    parser.add_argument('--phage_out', required=True)
+
+    # parser.add_argument('--output_npz', required=True)
+    # parser.add_argument('--output', required=True)
 
     parser.add_argument('--model_name', type=str, default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
     parser.add_argument('--batch_size', type=int, default=8)
@@ -101,8 +106,17 @@ def main():
     parser.add_argument('--gpu', default='gpu:1')
     parser.add_argument('--root_dir', default='.')
     parser.add_argument('--script', default='protembed/main.py')
-
     parser.add_argument('--dry_run', action='store_true')
+
+
+# model_name, 
+# context_len, 
+# strain_in, 
+# strain_out, 
+# phage_in, 
+# phage_out, 
+# early_exit=False, 
+# test_mode=False
 
     args = parser.parse_args()
 

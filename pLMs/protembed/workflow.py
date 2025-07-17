@@ -35,7 +35,7 @@ def tokenize_protein_sequences(tokenizer, sequences, max_length=1024):
         max_length=max_length,
     )
 
-def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in, phage_out, bacteria='ecoli', early_exit=False, test_mode=False):
+def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in, phage_out, early_exit=False, test_mode=False):
     """
     Runs the pLM workflow to extract embeddings.
     """
@@ -62,7 +62,7 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     ephage_embed = extract_embeddings(ephage_n_select, context_len, tokenize_func, model, test_mode=test_mode)
 
     logger.info("Saving embeddings to output directories")
-    save_to_dir(strain_out, embeddings=estrain_embed, pads=estrain_pads, name=bacteria, strn_or_phage='strain')
-    save_to_dir(phage_out, embeddings=ephage_embed, pads=ephage_pads, name=bacteria, strn_or_phage='phage')
+    save_to_dir(strain_out, embeddings=estrain_embed, pads=estrain_pads, strn_or_phage='strain')
+    save_to_dir(phage_out, embeddings=ephage_embed, pads=ephage_pads, strn_or_phage='phage')
 
     logger.info("Embedding workflow complete.")

@@ -12,7 +12,6 @@ def main():
     parser.add_argument("--strain_out", type=str, required=True, help="Output directory for strain embeddings")
     parser.add_argument("--phage_in", type=str, required=True, help="Path to phage FASTA directory")
     parser.add_argument("--phage_out", type=str, required=True, help="Output directory for phage embeddings")
-    parser.add_argument("--bacteria", type=str, default="ecoli", help="Bacterial host name (default: ecoli)")
     parser.add_argument("--early_exit", action="store_true", help="Flag to skip embedding and exit early")
     parser.add_argument("--test_mode", action="store_true", help="Run in test mode (loads fewer sequences)")
 
@@ -25,7 +24,6 @@ def main():
         strain_out=args.strain_out,
         phage_in=args.phage_in,
         phage_out=args.phage_out,
-        bacteria=args.bacteria,
         early_exit=args.early_exit,
         test_mode=args.test_mode
     )
@@ -33,6 +31,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-#create and install conda environment to install all the packages on
-#look at avery's file to see how to load conda env, module and open the correct one.
+# fix arguments make sure they match up 

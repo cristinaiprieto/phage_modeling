@@ -16,11 +16,10 @@ def main():
     args = parser.parse_args()
     model_name = args.model_name
 
-    # CHANGE THIS TO DIR IN LAWRENCIUM
-
-    input_fasta = "/usr2/people/cristinaprieto/phage_modeling/genome_AAs/all_sequences.fasta"  # Your merged fasta file
-    output_dir = "/usr2/people/cristinaprieto/phage_modeling/pLMs/embeddings/combined_workflow"
-    root_dir = "/usr2/people/cristinaprieto/phage_modeling"
+    phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"  # Your merged fasta file
+    strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
+    output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings"
+    root_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling"
 
     # =============================================
     # SLURM CONFIGURATION
@@ -34,7 +33,7 @@ def main():
     # WORKFLOW PARAMETERS
     # =============================================
     script_name = "slurm_script.py" 
-    model_name = "ProtT5" 
+    model_name = model_name
     batch_size = "8"
     dry_run = False  # Set True to only create scripts but not submit
 
@@ -45,7 +44,8 @@ def main():
         "python3", script_name,
         
         # Required arguments for embedding script
-        "--input_fasta", input_fasta,
+        "--phage_input_fasta", phage_input_fasta,
+        "--strain_input_fasta", strain_input_fasta,
         "--output_path", output_dir,
         "--model_name", model_name,
         "--batch_size", batch_size,
