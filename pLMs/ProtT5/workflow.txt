@@ -5,3 +5,4 @@ pip3 install -r requirements.txt
 
 Then to generate embeddings:
 python3 ProtT5_embeddings_by_dir.py --input_dir /usr2/people/cristinaprieto/phage_modeling/genome_AAs --output_dir /usr2/people/cristinaprieto/phage_modeling/pLMs/ProtT5/embeddings/raw
+

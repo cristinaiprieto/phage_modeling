@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-plMs SLURM Workflow
+plMs SLURM Workflow. Writes a SLURM batch script
 """
 
 import os
@@ -85,7 +85,7 @@ def main():
     parser.add_argument('--output_npz', required=True)
     parser.add_argument('--output', required=True)
 
-    parser.add_argument('--model_name', default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
+    parser.add_argument('--model_name', type=str, default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
     parser.add_argument('--batch_size', type=int, default=8)
 
     parser.add_argument('--account', default='ac_mak')
@@ -93,7 +93,7 @@ def main():
     parser.add_argument('--qos', default='es_normal')
     parser.add_argument('--gpu', default='gpu:1')
     parser.add_argument('--root_dir', default='.')
-    parser.add_argument('--script', default='main.py')
+    parser.add_argument('--script', default='protembed/main.py')
 
     parser.add_argument('--dry_run', action='store_true')
 
@@ -116,7 +116,7 @@ def main():
     os.chdir(run_dir)
 
     if not config.check_stage_completion(1):
-        job_id = submit_job("embed_protein.sh")
+        job_id = submit_job("main.sh")
         print(f"Submitted embedding job with ID: {job_id}")
     else:
         print("Embedding stage already complete.")

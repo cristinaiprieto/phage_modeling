@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """
 SLURM workflow submission script for protein embeddings (ProtT5 / ESM2).
-Edit the paths and parameters below, then run: python3 submit_embeddings.py
+Run: python3 submit_embeddings.py
 """
 
 import subprocess
 import sys
 
+
 def main():
-    # =============================================
-    # YOUR PATHS - EDIT THESE
-    # =============================================
+    
+    parser = argparse.ArgumentParser(description="Run SLURM submission script.")
+    parser.add_argument('--model_name', type=str, default='ProtT5', help='Model name to use, e.g. ProtT5 or ESM2')
+    args = parser.parse_args()
+    model_name = args.model_name
+
+    # CHANGE THIS TO DIR IN LAWRENCIUM
+
     input_fasta = "/usr2/people/cristinaprieto/phage_modeling/genome_AAs/all_sequences.fasta"  # Your merged fasta file
     output_dir = "/usr2/people/cristinaprieto/phage_modeling/pLMs/embeddings/combined_workflow"
     root_dir = "/usr2/people/cristinaprieto/phage_modeling"
@@ -19,17 +25,17 @@ def main():
     # SLURM CONFIGURATION
     # =============================================
     account = "ac_mak"
-    partition = "es1"                    # SLURM partition
-    qos = "es_normal"                   # SLURM QOS
-    gpu = "gpu:H100:1"                      # GPU resource
+    partition = "es1" 
+    qos = "es_normal"  
+    gpu = "gpu:H100:1" 
 
     # =============================================
     # WORKFLOW PARAMETERS
     # =============================================
-    script_name = "main.py"  # Your embedding script filename
-    model_name = "ProtT5"    # or "ESM2"
+    script_name = "slurm_script.py" 
+    model_name = "ProtT5" 
     batch_size = "8"
-    dry_run = False          # Set True to only create scripts but not submit
+    dry_run = False  # Set True to only create scripts but not submit
 
     # =============================================
     # BUILD COMMAND
@@ -37,13 +43,13 @@ def main():
     cmd = [
         "python3", script_name,
         
-        # Required arguments for your embedding script
+        # Required arguments for embedding script
         "--input_fasta", input_fasta,
         "--output_path", output_dir,
         "--model_name", model_name,
         "--batch_size", batch_size,
         
-        # SLURM / environment configs if needed
+        # SLURM / environment configs
         "--account", account,
         "--partition", partition,
         "--qos", qos,
@@ -71,7 +77,7 @@ def main():
     print()
 
     if dry_run:
-        print("🧪 DRY RUN MODE - Scripts will be created but not submitted")
+        print("DRY RUN MODE - Scripts will be created but not submitted")
         print()
 
     print("Submitting workflow with command:")

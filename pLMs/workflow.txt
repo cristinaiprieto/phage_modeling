@@ -1,0 +1,7 @@
+python3 main.py \
+  --model_name prot_t5 \
+  --context_len 512 \
+  --strain_in /your/input/strain_fasta \
+  --strain_out /your/output/strain_embeddings \
+  --phage_in /your/input/phage_fasta \
+  --phage_out /your/output/phage_embeddings
