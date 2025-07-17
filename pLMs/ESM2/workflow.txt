@@ -1,0 +1,11 @@
+Go to ESM2 working directory.
+
+Run: 
+pip3 install -r requirements.txt
+
+Generate initial embeddings:
+python3 /usr2/people/cristinaprieto/phage_modeling/pLMs/ESM2/ESM2_embeddings_by_dir.py esm2_t33_650M_UR50D /usr2/people/cristinaprieto/phage_modeling/pLMs/proteins/strain_AAs /usr2/people/cristinaprieto/phage_modeling/escherichia/embeddings/raw /usr2/people/cristinaprieto/phage_modeling/escherichia/data/interaction_matrix.csv strain
+
+Convert embeddings:
+python3 /usr2/people/cristinaprieto/phage_modeling/pLMs/ESM2/ESM2_embedding_conversion.py /usr2/people/cristinaprieto/phage_modeling/escherichia/embeddings/raw /usr2/people/cristinaprieto/phage_modeling/escherichia/embeddings/converted
+
