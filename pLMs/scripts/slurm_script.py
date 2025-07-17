@@ -19,7 +19,6 @@ class ProteinPipelineConfig():
         self.stage_names = {
             1: "Embedding", 
         }
-        self.conda_env = "phage_modeling_env"
 
     def check_stage_completion(self, stage):
         marker = self.completion_markers.get(stage)
@@ -61,11 +60,11 @@ echo "Started: $(date)"
 
 module load ml/pytorch
 module load anaconda3
-conda activate {conda_env} 2>&1 || {{
+conda activate {"phage_modeling_env"} 2>&1 || {{
     echo "Direct activation failed, trying with conda init..."
     conda init bash >/dev/null 2>&1
     source ~/.bashrc >/dev/null 2>&1
-    conda activate {conda_env}
+    conda activate {"phage_modeling_env"}
 }}
 
 cd {args.root_dir}
