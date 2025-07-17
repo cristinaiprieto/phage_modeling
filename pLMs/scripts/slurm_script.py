@@ -7,6 +7,7 @@ import os
 import argparse
 import subprocess
 import time
+from datetime import datetime
 
 class ProteinPipelineConfig():
     def __init__(self, args):
@@ -54,11 +55,17 @@ def create_embedding_script(args, run_dir):
 #SBATCH --output=logs/embedding_%j.out
 #SBATCH --error=logs/embedding_%j.err
 
-echo "=== Starting Protein Embedding Job ==="
 echo "Job ID: $SLURM_JOB_ID"
 echo "Started: $(date)"
 
 module load ml/pytorch
+module load anaconda3
+conda activate {conda_env} 2>&1 || {{
+    echo "Direct activation failed, trying with conda init..."
+    conda init bash >/dev/null 2>&1
+    source ~/.bashrc >/dev/null 2>&1
+    conda activate {conda_env}
+}}
 
 cd {args.root_dir}
 pip install -e .
@@ -71,7 +78,7 @@ python3 {args.script} \\
     --batch_size {args.batch_size}
 
 touch {args.output}/embedding_complete.txt
-echo "=== Embedding Job Complete ==="
+echo "Completed: $ (date)"
 """
     path = os.path.join(run_dir, "main.sh")
     with open(path, 'w') as f:
