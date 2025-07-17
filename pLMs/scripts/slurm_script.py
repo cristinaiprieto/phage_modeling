@@ -12,7 +12,7 @@ from datetime import datetime
 class ProteinPipelineConfig():
     def __init__(self, args):
         self.args = args
-        output_dir = args.output
+        output_dir = args.output_path
         self.completion_markers = {
             1: os.path.join(output_dir, "embedding_complete.txt"),
         }
