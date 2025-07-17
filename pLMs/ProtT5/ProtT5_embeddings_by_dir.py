@@ -30,3 +30,13 @@ def generate_prott5_embeddings(input_dir, output_dir):
     output_path = os.path.join(output_dir, f"{protein_id}.pt")
     torch.save(pooled_embedding, output_path)
 
+def main():
+    parser = argparse.ArgumentParser(description="Generate ProtT5 embeddings from .faa files")
+    parser.add_argument("--input_dir", type=str, required=True, help="Directory with input .faa files")
+    parser.add_argument("--output_dir", type=str, required=True, help="Directory to save .pt embedding files")
+    args = parser.parse_args()
+
+    generate_prott5_embeddings(args.input_dir, args.output_dir)
+
+if __name__ == "__main__":
+    main()
