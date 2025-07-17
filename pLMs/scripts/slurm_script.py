@@ -89,10 +89,9 @@ echo "Completed: $ (date)"
 
 def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
-    parser.add_argument('--strain_in', required=True)
-    parser.add_argument('--strain_out', required=True)
-    parser.add_argument('--phage_in', required=True)
-    parser.add_argument('--phage_out', required=True)
+    parser.add_argument('--strain_input_fasta', required=True)
+    parser.add_argument('--phage_input_fasta', required=True)
+    parser.add_argument('--output_path', required=True)
 
     # parser.add_argument('--output_npz', required=True)
     # parser.add_argument('--output', required=True)
