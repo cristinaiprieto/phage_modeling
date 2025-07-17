@@ -72,7 +72,7 @@ def main():
     print(f"QoS:               {qos}")
     print(f"GPU:               {gpu}")
     print()
-    print(f"Input fasta:       {input_fasta}")
+    # print(f"Input fasta:       {input_fasta}")
     print(f"Output directory:  {output_dir}")
     print(f"Model name:        {model_name}")
     print()
