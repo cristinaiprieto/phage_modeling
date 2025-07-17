@@ -22,7 +22,7 @@ class ProteinPipelineConfig():
     def check_stage_completion(self, stage):
         marker = self.completion_markers.get(stage)
         if marker and os.path.exists(marker):
-            print(f"✅ Stage {stage} appears complete (found: {marker})")
+            print(f"Stage {stage} appears complete (found: {marker})")
             return True
         return False
 
@@ -48,7 +48,7 @@ def create_embedding_script(args, run_dir):
 #SBATCH --qos={args.qos}
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=2
 #SBATCH --gres={args.gpu}
 #SBATCH --time=2:00:00
 #SBATCH --output=logs/embedding_%j.out

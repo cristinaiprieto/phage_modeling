@@ -59,3 +59,7 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     save_to_dir(phage_out, embeddings=ephage_embed, pads=ephage_pads, name=bacteria, strn_or_phage='phage')
 
     print("Embedding workflow complete.")
+
+#create main function to run this func
+#create and install conda environment to install all the packages on
+#look at avery's file to see how to load conda env, module and open the correct one.

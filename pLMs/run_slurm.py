@@ -21,7 +21,7 @@ def main():
     account = "ac_mak"
     partition = "es1"                    # SLURM partition
     qos = "es_normal"                   # SLURM QOS
-    gpu = "gpu:1"                      # GPU resource
+    gpu = "gpu:H100:1"                      # GPU resource
 
     # =============================================
     # WORKFLOW PARAMETERS
