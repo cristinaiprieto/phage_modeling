@@ -6,6 +6,7 @@ Run: python3 submit_embeddings.py
 
 import subprocess
 import sys
+import argparse
 
 
 def main():
