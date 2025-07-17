@@ -74,11 +74,11 @@ echo "Running embedding script..."
 python3 {args.script} \\
     --strain_input_fasta {args.strain_input_fasta} \\
     --phage_input_fasta {args.phage_input_fasta} \\
-    --output_path {args.output_npz} \\
+    --output_path {args.output_path} \\
     --model_name {args.model_name} \\
     --batch_size {args.batch_size}
 
-touch {args.output}/embedding_complete.txt
+touch {args.output_path}/embedding_complete.txt
 echo "Completed: $ (date)"
 """
     path = os.path.join(run_dir, "main.sh")
