@@ -2,6 +2,10 @@ from transformers import T5EncoderModel, T5Tokenizer
 import torch
 import os
 
+"""
+Generate embeddings via ProtT5
+"""
+
 def generate_prott5_embeddings(input_dir, output_dir):
     # Load tokenizer and ProtT5 model
     tokenizer = T5Tokenizer.from_pretrained("Rostlab/prot_t5_xl_uniref50", do_lower_case=False)

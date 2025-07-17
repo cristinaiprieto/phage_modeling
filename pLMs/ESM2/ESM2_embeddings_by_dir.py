@@ -4,6 +4,10 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+"""
+Generate embeddings using ESM2
+"""
+
 import argparse
 import pathlib
 import numpy as np
