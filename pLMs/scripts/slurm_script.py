@@ -72,7 +72,8 @@ pip install -e .
 
 echo "Running embedding script..."
 python3 {args.script} \\
-    --input_fasta {args.input_fasta} \\
+    --strain_input_fasta {args.strain_input_fasta} \\
+    --phage_input_fasta {args.phage_input_fasta} \\
     --output_path {args.output_npz} \\
     --model_name {args.model_name} \\
     --batch_size {args.batch_size}
