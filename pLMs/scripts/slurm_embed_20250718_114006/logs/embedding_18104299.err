@@ -1,0 +1,2 @@
+ERROR: file:///global/home/users/ciprietowitvoet/pLM/phage_modeling does not appear to be a Python project: neither 'setup.py' nor 'pyproject.toml' found.
+python3: can't open file '/global/home/users/ciprietowitvoet/pLM/phage_modeling/protembed/main.py': [Errno 2] No such file or directory
