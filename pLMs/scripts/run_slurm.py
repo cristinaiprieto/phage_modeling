@@ -15,7 +15,7 @@ def main():
     parser.add_argument('--model_name', type=str, default='ProtT5', help='Model name to use, e.g. ProtT5 or ESM2')
     args = parser.parse_args()
     model_name = args.model_name
-
+    phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"
     strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
     strain_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/strain"
     phage_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/phage"
