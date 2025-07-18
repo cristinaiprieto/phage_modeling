@@ -36,7 +36,7 @@ def submit_job(script_path, dependency=None):
     cmd.append(script_path)
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error submitting {script_path}: {e}")
