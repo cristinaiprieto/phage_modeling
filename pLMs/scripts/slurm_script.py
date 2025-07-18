@@ -91,10 +91,12 @@ def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
     parser.add_argument('--strain_input_fasta', required=True)
     parser.add_argument('--phage_input_fasta', required=True)
-    parser.add_argument('--output_path', required=True)
+    parser.add_argument('--strain_output_path', required=True)
+    parser.add_argument('--phage_output_path', required=True)
 
     # parser.add_argument('--output_npz', required=True)
     # parser.add_argument('--output', required=True)
+    # see ESM2_embeddings_by_dir
 
     parser.add_argument('--model_name', type=str, default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
     parser.add_argument('--batch_size', type=int, default=8)
@@ -106,16 +108,6 @@ def main():
     parser.add_argument('--root_dir', default='.')
     parser.add_argument('--script', default='protembed/main.py')
     parser.add_argument('--dry_run', action='store_true')
-
-
-# model_name, 
-# context_len, 
-# strain_in, 
-# strain_out, 
-# phage_in, 
-# phage_out, 
-# early_exit=False, 
-# test_mode=False
 
     args = parser.parse_args()
 

@@ -18,7 +18,8 @@ def main():
 
     phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"  # Your merged fasta file
     strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
-    output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings"
+    strain_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/strain"
+    phage_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/phage"
     root_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling"
 
     # =============================================
@@ -46,7 +47,8 @@ def main():
         # Required arguments for embedding script
         "--phage_input_fasta", phage_input_fasta,
         "--strain_input_fasta", strain_input_fasta,
-        "--output_path", output_dir,
+        "--strain_output_path", strain_output_dir,
+        "--phage_output_path", phage_output_dir,
         "--model_name", model_name,
         "--batch_size", batch_size,
         
@@ -71,11 +73,11 @@ def main():
     print(f"Partition:         {partition}")
     print(f"QoS:               {qos}")
     print(f"GPU:               {gpu}")
-    print()
+    # print()
     # print(f"Input fasta:       {input_fasta}")
-    print(f"Output directory:  {output_dir}")
+    # print(f"Output directory:  {output_dir}")
     print(f"Model name:        {model_name}")
-    print()
+    # print()
 
     if dry_run:
         print("DRY RUN MODE - Scripts will be created but not submitted")
