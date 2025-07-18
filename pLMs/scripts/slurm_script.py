@@ -36,7 +36,7 @@ def submit_job(script_path, dependency=None):
     cmd.append(script_path)
 
     try:
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True=True, check=True)
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error submitting {script_path}: {e}")
@@ -62,11 +62,11 @@ echo "Started: $(date)"
 
 module load ml/pytorch
 module load anaconda3
-conda activate {"phage_modeling_env"} 2>&1 || {{
+conda activate phage_modeling_env 2>&1 || {{
     echo "Direct activation failed, trying with conda init..."
     conda init bash >/dev/null 2>&1
     source ~/.bashrc >/dev/null 2>&1
-    conda activate {"phage_modeling_env"}
+    conda activate phage_modeling_env
 }}
 
 cd {args.root_dir}
