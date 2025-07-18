@@ -83,7 +83,7 @@ python3 {args.script} \\
 
 touch {args.strain_output_path}/strain_embedding_complete.txt
 touch {args.phage_output_path}/phage_embedding_complete.txt
-echo "Completed: $ (date)"
+echo "Completed: $(date)"
 """
     path = os.path.join(run_dir, "main.sh")
     with open(path, 'w') as f:
@@ -110,7 +110,7 @@ def main():
     parser.add_argument('--qos', default='es_normal')
     parser.add_argument('--gpu', default='gpu:1')
     parser.add_argument('--root_dir', default='.')
-    parser.add_argument('--script', default='protembed/main.py')
+    parser.add_argument('--script', default='pLMs/protembed/main.py')
     parser.add_argument('--dry_run', action='store_true')
 
     args = parser.parse_args()

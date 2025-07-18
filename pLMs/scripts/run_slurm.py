@@ -16,7 +16,6 @@ def main():
     args = parser.parse_args()
     model_name = args.model_name
 
-    phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"  # Your merged fasta file
     strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
     strain_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/strain"
     phage_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/phage"
@@ -95,7 +94,6 @@ def main():
             print("Workflow submitted successfully!")
             print("Monitor progress with:")
             print("  squeue -u $USER")
-            print("  tail -f slurm_run_*/logs/*.out")
     except subprocess.CalledProcessError as e:
         print(f"Error submitting workflow: {e}")
         return 1
