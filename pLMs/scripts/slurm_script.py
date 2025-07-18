@@ -80,7 +80,8 @@ python3 {args.script} \\
     --model_name {args.model_name} \\
     --batch_size {args.batch_size}
 
-touch {args.output_path}/embedding_complete.txt
+touch {args.strain_output_path}/strain_embedding_complete.txt
+touch {args.phage_output_path}/phage_embedding_complete.txt
 echo "Completed: $ (date)"
 """
     path = os.path.join(run_dir, "main.sh")
