@@ -76,7 +76,8 @@ echo "Running embedding script..."
 python3 {args.script} \\
     --strain_input_fasta {args.strain_input_fasta} \\
     --phage_input_fasta {args.phage_input_fasta} \\
-    --output_path {args.output_path} \\
+    --strain_output_path {args.strain_output_path} \\
+    --phage_output_path {args.phage_output_path} \\
     --model_name {args.model_name} \\
     --batch_size {args.batch_size}
 
