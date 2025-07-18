@@ -15,7 +15,8 @@ class ProteinPipelineConfig():
         strain_output_dir = args.strain_output_path
         phage_output_dir = args.phage_output_path
         self.completion_markers = {
-            1: os.path.join(output_dir, "embedding_complete.txt"),
+            1: os.path.join(phage_output_dir, "phage_embedding_complete.txt"),
+            2: os.path.join(strain_output_dir, "strain_embedding_complete.txt")
         }
         self.stage_names = {
             1: "Embedding", 
