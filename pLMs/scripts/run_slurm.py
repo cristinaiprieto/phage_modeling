@@ -44,10 +44,10 @@ def main():
         "python3", script_name,
         
         # Required arguments for embedding script
-        "--phage_input_fasta", phage_input_fasta,
-        "--strain_input_fasta", strain_input_fasta,
-        "--strain_output_path", strain_output_dir,
-        "--phage_output_path", phage_output_dir,
+        "--phage_in", phage_input_fasta,
+        "--strain_in", strain_input_fasta,
+        "--strain_out", strain_output_dir,
+        "--phage_out", phage_output_dir,
         "--model_name", model_name,
         # "--batch_size", batch_size,
         

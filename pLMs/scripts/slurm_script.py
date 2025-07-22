@@ -12,8 +12,8 @@ from datetime import datetime
 class ProteinPipelineConfig():
     def __init__(self, args):
         self.args = args
-        strain_output_dir = args.strain_output_path
-        phage_output_dir = args.phage_output_path
+        strain_output_dir = args.strain_out
+        phage_output_dir = args.phage_out
         self.completion_markers = {
             1: os.path.join(phage_output_dir, "phage_embedding_complete.txt"),
             2: os.path.join(strain_output_dir, "strain_embedding_complete.txt")
@@ -74,14 +74,14 @@ pip install -e .
 
 echo "Running embedding script..."
 python3 {args.script} \\
-    --strain_in {args.strain_input_fasta} \\
-    --phage_in {args.phage_input_fasta} \\
-    --strain_out {args.strain_output_path} \\
-    --phage_out {args.phage_output_path} \\
+    --strain_in {args.strain_in} \\
+    --phage_in {args.phage_in} \\
+    --strain_out {args.strain_out} \\
+    --phage_out {args.phage_out} \\
     --model_name {args.model_name} \\
 
-touch {args.strain_output_path}/strain_embedding_complete.txt
-touch {args.phage_output_path}/phage_embedding_complete.txt
+touch {args.strain_out}/strain_embedding_complete.txt
+touch {args.phage_out}/phage_embedding_complete.txt
 echo "Completed: $(date)"
 """
     path = os.path.join(run_dir, "main.sh")
@@ -92,7 +92,7 @@ echo "Completed: $(date)"
 
 def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
-    parser.add_argument('--strain_inp', required=True)
+    parser.add_argument('--strain_in', required=True)
     parser.add_argument('--phage_in', required=True)
     parser.add_argument('--strain_out', required=True)
     parser.add_argument('--phage_out', required=True)
