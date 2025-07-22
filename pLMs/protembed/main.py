@@ -7,7 +7,7 @@ import argparse
 def main():
 
     parser = argparse.ArgumentParser(description="Run protein embedding workflow using ProtT5 or ESM2.")
-    parser.add_argument("--model_name", type=str, required=True, choices=["prot_t5", "esm2"], help="Model name: prot_t5 or esm2")
+    parser.add_argument("--model_name", type=str, required=True, choices=["ProtT5", "ESM2"], help="Model name: ProtT5 or ESM2")
     parser.add_argument("--context_len", type=int, default=512, help="Maximum sequence length for tokenization")
     parser.add_argument("--strain_in", type=str, required=True, help="Path to strain FASTA directory")
     parser.add_argument("--strain_out", type=str, required=True, help="Output directory for strain embeddings")
