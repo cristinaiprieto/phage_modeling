@@ -74,12 +74,11 @@ pip install -e .
 
 echo "Running embedding script..."
 python3 {args.script} \\
-    --strain_input_fasta {args.strain_input_fasta} \\
-    --phage_input_fasta {args.phage_input_fasta} \\
-    --strain_output_path {args.strain_output_path} \\
-    --phage_output_path {args.phage_output_path} \\
+    --strain_in {args.strain_input_fasta} \\
+    --phage_in {args.phage_input_fasta} \\
+    --strain_out {args.strain_output_path} \\
+    --phage_out {args.phage_output_path} \\
     --model_name {args.model_name} \\
-    --batch_size {args.batch_size}
 
 touch {args.strain_output_path}/strain_embedding_complete.txt
 touch {args.phage_output_path}/phage_embedding_complete.txt
@@ -93,17 +92,17 @@ echo "Completed: $(date)"
 
 def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
-    parser.add_argument('--strain_input_fasta', required=True)
-    parser.add_argument('--phage_input_fasta', required=True)
-    parser.add_argument('--strain_output_path', required=True)
-    parser.add_argument('--phage_output_path', required=True)
+    parser.add_argument('--strain_inp', required=True)
+    parser.add_argument('--phage_in', required=True)
+    parser.add_argument('--strain_out', required=True)
+    parser.add_argument('--phage_out', required=True)
 
     # parser.add_argument('--output_npz', required=True)
     # parser.add_argument('--output', required=True)
     # see ESM2_embeddings_by_dir
 
     parser.add_argument('--model_name', type=str, default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
-    parser.add_argument('--batch_size', type=int, default=8)
+    # parser.add_argument('--batch_size', type=int, default=8)
 
     parser.add_argument('--account', default='ac_mak')
     parser.add_argument('--partition', default='es1')

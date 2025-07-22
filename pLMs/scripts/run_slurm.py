@@ -49,7 +49,7 @@ def main():
         "--strain_output_path", strain_output_dir,
         "--phage_output_path", phage_output_dir,
         "--model_name", model_name,
-        "--batch_size", batch_size,
+        # "--batch_size", batch_size,
         
         # SLURM / environment configs
         "--account", account,
