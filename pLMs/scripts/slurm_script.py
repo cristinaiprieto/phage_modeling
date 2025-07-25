@@ -62,15 +62,14 @@ echo "Started: $(date)"
 
 module load ml/pytorch
 module load anaconda3
-conda activate phage_modeling_env 2>&1 || {{
+conda activate phage_modeling_env 2>&1 || {
     echo "Direct activation failed, trying with conda init..."
     conda init bash >/dev/null 2>&1
     source ~/.bashrc >/dev/null 2>&1
     conda activate phage_modeling_env
-}}
+}
 
 cd {args.root_dir}
-pip install -e .
 
 echo "Running embedding script..."
 python3 {args.script} \\
