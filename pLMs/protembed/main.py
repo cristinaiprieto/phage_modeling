@@ -1,6 +1,6 @@
 import os
 import torch
-from .workflow import embedding_workflow
+from workflow import embedding_workflow
 #.workflow.py?
 import argparse
 

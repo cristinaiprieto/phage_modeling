@@ -84,7 +84,7 @@ touch {args.strain_out}/strain_embedding_complete.txt
 touch {args.phage_out}/phage_embedding_complete.txt
 echo "Completed: $(date)"
 """
-    path = os.path.join(run_dir, "main.sh")
+    path = os.path.join(run_dir, "main.slurm")
     with open(path, 'w') as f:
         f.write(script)
     os.chmod(path, 0o755)
