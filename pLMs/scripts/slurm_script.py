@@ -9,6 +9,7 @@ import subprocess
 import time
 from datetime import datetime
 
+
 class ProteinPipelineConfig():
     def __init__(self, args):
         self.args = args
@@ -56,6 +57,10 @@ def create_embedding_script(args, run_dir):
 #SBATCH --time=2:00:00
 #SBATCH --output=logs/embedding_%j.out
 #SBATCH --error=logs/embedding_%j.err
+
+export HF_HOME=/global/scratch/users/ciprietowitvoet/hf_cache
+export TRANSFORMERS_CACHE=$HF_HOME/transformers
+export HF_DATASETS_CACHE=$HF_HOME/datasets
 
 echo "Job ID: $SLURM_JOB_ID"
 echo "Started: $(date)"
