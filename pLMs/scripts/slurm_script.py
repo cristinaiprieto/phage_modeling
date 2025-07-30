@@ -74,6 +74,7 @@ conda activate phage_modeling_env 2>&1 || {{
     conda activate phage_modeling_env
 }}
 pip install torch transformers tqdm safetensors numpy
+conda install pytorch>=2.6 torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 
 cd {args.root_dir}
 
