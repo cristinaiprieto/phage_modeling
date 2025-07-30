@@ -62,15 +62,17 @@ echo "Started: $(date)"
 
 module load ml/pytorch
 module load anaconda3
-conda activate phage_modeling_env 2>&1 || {
+conda activate phage_modeling_env 2>&1 || {{
     echo "Direct activation failed, trying with conda init..."
     conda init bash >/dev/null 2>&1
     source ~/.bashrc >/dev/null 2>&1
     conda activate phage_modeling_env
-}
+}}
+pip install transformers
 
 cd {args.root_dir}
 
+mkdir -p logs
 echo "Running embedding script..."
 python3 {args.script} \\
     --strain_in {args.strain_in} \\
@@ -130,7 +132,7 @@ def main():
     os.chdir(run_dir)
 
     if not config.check_stage_completion(1):
-        job_id = submit_job("main.sh")
+        job_id = submit_job("main.slurm")
         print(f"Submitted embedding job with ID: {job_id}")
     else:
         print("Embedding stage already complete.")

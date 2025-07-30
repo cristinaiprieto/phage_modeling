@@ -1,8 +1,12 @@
-import os
 import torch
-from workflow import embedding_workflow
-#.workflow.py?
 import argparse
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+from workflow import embedding_workflow
+
 
 def main():
 
