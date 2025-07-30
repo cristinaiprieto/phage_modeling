@@ -17,8 +17,8 @@ def main():
     model_name = args.model_name
     phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"
     strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
-    strain_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/strain"
-    phage_output_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/output_embeddings/phage"
+    strain_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/strain"
+    phage_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/phage"
     root_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling"
 
     # =============================================
