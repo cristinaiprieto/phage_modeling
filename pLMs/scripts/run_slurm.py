@@ -20,7 +20,7 @@ def main():
     strain_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/strain"
     phage_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/phage"
     root_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling"
-    script = "/usr2/people/cristinaprieto/phage_modeling/pLMs/protembed/main.py"
+    script = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py"
 
     # =============================================
     # SLURM CONFIGURATION
