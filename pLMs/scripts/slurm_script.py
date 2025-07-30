@@ -68,7 +68,7 @@ conda activate phage_modeling_env 2>&1 || {{
     source ~/.bashrc >/dev/null 2>&1
     conda activate phage_modeling_env
 }}
-pip install transformers
+pip install torch transformers tqdm safetensors numpy
 
 cd {args.root_dir}
 

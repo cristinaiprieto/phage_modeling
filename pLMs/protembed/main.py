@@ -7,6 +7,18 @@ import os
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from workflow import embedding_workflow
 
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger(__name__)
+
+print("Starting main.py script")
+
+
 
 def main():
 
