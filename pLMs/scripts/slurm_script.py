@@ -95,8 +95,14 @@ python3 {args.script} \\
     --phage_out {args.phage_out} \\
     --model_name {args.model_name} \\
 
-touch {args.strain_out}/strain_embedding_complete.txt
-touch {args.phage_out}/phage_embedding_complete.txt
+if [ $? -eq 0 ]; then
+    echo "Workflow completed successfully."
+    touch {args.strain_out}/strain_embedding_complete.txt
+    touch {args.phage_out}/phage_embedding_complete.txt
+else
+    echo "Workflow failed. Completion markers not created."
+fi
+
 echo "Completed: $(date)"
 """
     path = os.path.join(run_dir, "main.slurm")
