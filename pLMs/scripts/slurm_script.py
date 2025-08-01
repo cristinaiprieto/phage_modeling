@@ -82,6 +82,9 @@ conda activate $SCRATCH_ENV_PATH 2>&1 || {{
     conda activate $SCRATCH_ENV_PATH
 }}
 
+echo "Using Python from: $(which python)"
+python -c "import transformers; print('Transformers version:', transformers.__version__); print('Transformers path:', transformers.__file__)"
+
 cd {args.root_dir}
 
 mkdir -p logs
