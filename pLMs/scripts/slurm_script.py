@@ -70,12 +70,10 @@ module load anaconda3
 
 SCRATCH_ENV_PATH=/global/scratch/users/$USER/envs/phage_modeling_env
 
-export PYTHONUSERBASE=/global/scratch/users/$USER/.local
 export XDG_CACHE_HOME=/global/scratch/users/$USER/.cache
 export TRANSFORMERS_CACHE=$XDG_CACHE_HOME/huggingface
 export HF_HOME=$XDG_CACHE_HOME/huggingface
 export PIP_CACHE_DIR=$XDG_CACHE_HOME/pip
-export PYTHONPATH=/global/scratch/users/$USER/.local:$PYTHONPATH
 
 conda activate $SCRATCH_ENV_PATH 2>&1 || {{
     echo "Direct activation failed, trying with conda init..."
