@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/bin/bash -l
 """
 plMs SLURM Workflow. Writes a SLURM batch script
 """
@@ -65,8 +65,8 @@ export HF_DATASETS_CACHE=$HF_HOME/datasets
 echo "Job ID: $SLURM_JOB_ID"
 echo "Started: $(date)"
 
-module load ml/pytorch
 module load anaconda3
+source $(conda info --base)/etc/profile.d/conda.sh
 
 SCRATCH_ENV_PATH=/global/scratch/users/$USER/envs/phage_modeling_env
 
