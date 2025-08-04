@@ -82,13 +82,13 @@ conda activate $SCRATCH_ENV_PATH 2>&1 || {{
     conda activate $SCRATCH_ENV_PATH
 }}
 
-conda run -p $SCRATCH_ENV_PATH python /global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py
+conda run -p $SCRATCH_ENV_PATH python3 /global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py
 
 cd {args.root_dir}
 
 mkdir -p logs
 echo "Running embedding script..."
-conda run -p $SCRATCH_ENV_PATH python {args.script} \\
+conda run -p $SCRATCH_ENV_PATH python3 {args.script} \\
     --strain_in {args.strain_in} \\
     --phage_in {args.phage_in} \\
     --strain_out {args.strain_out} \\
