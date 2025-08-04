@@ -67,23 +67,16 @@ echo "Started: $(date)"
 
 SCRATCH_ENV_PATH=/global/scratch/users/$USER/envs/phage_modeling_env
 
-export XDG_CACHE_HOME=/global/scratch/users/$USER/.cache
-export TRANSFORMERS_CACHE=$XDG_CACHE_HOME/huggingface
-export HF_HOME=$XDG_CACHE_HOME/huggingface
-export PIP_CACHE_DIR=$XDG_CACHE_HOME/pip
-
 unset MKL_INTERFACE_LAYER
 unset MKL_THREADING_LAYER
 unset LD_PRELOAD
 
-conda activate $SCRATCH_ENV_PATH 2>&1 || {{
-    echo "Direct activation failed, trying with conda init..."
-    conda init bash >/dev/null 2>&1
-    source ~/.bashrc >/dev/null 2>&1
-    conda activate $SCRATCH_ENV_PATH
-}}
+conda activate $SCRATCH_ENV_PATH
 
-conda run -p $SCRATCH_ENV_PATH python3 /global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py
+export XDG_CACHE_HOME=/global/scratch/users/$USER/.cache
+export TRANSFORMERS_CACHE=$XDG_CACHE_HOME/huggingface
+export HF_HOME=$XDG_CACHE_HOME/huggingface
+export PIP_CACHE_DIR=$XDG_CACHE_HOME/pip
 
 cd {args.root_dir}
 
