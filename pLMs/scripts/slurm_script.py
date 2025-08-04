@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/usr/bin/env python3
 """
 plMs SLURM Workflow. Writes a SLURM batch script
 """
@@ -65,8 +65,8 @@ export HF_DATASETS_CACHE=$HF_HOME/datasets
 echo "Job ID: $SLURM_JOB_ID"
 echo "Started: $(date)"
 
+module load ml/pytorch
 module load anaconda3
-source $(conda info --base)/etc/profile.d/conda.sh
 
 SCRATCH_ENV_PATH=/global/scratch/users/$USER/envs/phage_modeling_env
 
@@ -82,14 +82,13 @@ conda activate $SCRATCH_ENV_PATH 2>&1 || {{
     conda activate $SCRATCH_ENV_PATH
 }}
 
-echo "Using Python from: $(which python)"
-python -c "import transformers; print('Transformers version:', transformers.__version__); print('Transformers path:', transformers.__file__)"
+conda run -p $SCRATCH_ENV_PATH python /global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py
 
 cd {args.root_dir}
 
 mkdir -p logs
 echo "Running embedding script..."
-python3 {args.script} \\
+conda run -p $SCRATCH_ENV_PATH python {args.script} \\
     --strain_in {args.strain_in} \\
     --phage_in {args.phage_in} \\
     --strain_out {args.strain_out} \\
