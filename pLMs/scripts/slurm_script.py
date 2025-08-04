@@ -53,8 +53,9 @@ def create_embedding_script(args, run_dir):
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
+#SBATCH --mem='80G'
 #SBATCH --gres={args.gpu}
-#SBATCH --time=2:00:00
+#SBATCH --time=12:00:00
 #SBATCH --output=logs/embedding_%j.out
 #SBATCH --error=logs/embedding_%j.err
 
