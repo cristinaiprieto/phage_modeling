@@ -105,7 +105,7 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     logger.info('tokenizer and model defined')
 
     def tokenize_func(batch, max_length=context_len):
-        return tokenize_protein_sequences(tokenizer, batch['base pairs'], max_length=max_length)
+        return tokenize_protein_sequences(tokenizer, batch, max_length=max_length)
     
     logger.info("Chunking input sequences")
     estrain_n_select, estrain_pads = complete_n_select(ecoli_strains, context_len)
