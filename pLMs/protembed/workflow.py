@@ -49,6 +49,9 @@ class SequenceDataset(Dataset):
 
     def __getitem__(self, idx):
         return {"base_pairs": self.sequences[idx]}
+    
+def string_collate_fn(batch):
+    return {"base_pairs": [item["base_pairs"] for item in batch]}
 
 def extract_embeddings(sequences, context_len, tokenize_func, model, model_name, batch_size=8, test_mode=False):
     """
@@ -59,7 +62,7 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
     model = model.to(device)
 
     dataset = SequenceDataset(sequences)
-    dataloader = DataLoader(dataset, batch_size=batch_size)
+    dataloader = DataLoader(dataset, batch_size=batch_size, collate_fn=string_collate_fn)
 
     all_embeddings = []
 
