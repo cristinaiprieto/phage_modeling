@@ -106,10 +106,10 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     ephage_n_select, ephage_pads = complete_n_select(ecoli_phages, context_len)
 
     logger.info("Extracting strain embeddings")
-    estrain_embed = extract_embeddings(estrain_n_select, context_len, tokenize_func, model, model_name, test_mode=test_mode)
+    estrain_embed = extract_embeddings(list(estrain_n_select.values()), context_len, tokenize_func, model, model_name, test_mode=test_mode)
 
     logger.info("Extracting phage embeddings")
-    ephage_embed = extract_embeddings(ephage_n_select, context_len, tokenize_func, model, model_name, test_mode=test_mode)
+    ephage_embed = extract_embeddings(list(ephage_n_select.values()), context_len, tokenize_func, model, model_name, test_mode=test_mode)
 
     logger.info("Saving embeddings to output directories")
     save_to_dir(strain_out, embeddings=estrain_embed, pads=estrain_pads, strn_or_phage='strain')
