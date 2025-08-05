@@ -51,7 +51,7 @@ class SequenceDataset(Dataset):
         return {"base_pairs": self.sequences[idx]}
     
 def string_collate_fn(batch):
-    return {"base_pairs": [item["base_pairs"] for item in batch]}
+    return [item["base_pairs"] for item in batch]  
 
 def extract_embeddings(sequences, context_len, tokenize_func, model, model_name, batch_size=8, test_mode=False):
     """
@@ -95,14 +95,17 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     ecoli_strains = rt_dicts(path=strain_in, seq_report=True, test_mode=test_mode)
     ecoli_phages = rt_dicts(path=phage_in, strn_or_phg='phage', seq_report=True, test_mode=test_mode)
 
+    logger.info('ecoli strains and phages defined')
+
     if early_exit:
         logger.info("Early exit triggered.")
         return
 
     tokenizer, model = get_model_and_tokenizer(model_name)
+    logger.info('tokenizer and model defined')
 
-    def tokenize_func(examples, max_length=context_len):
-        return tokenize_protein_sequences(tokenizer, examples["base_pairs"], max_length=max_length)
+    def tokenize_func(batch, max_length=context_len):
+        return tokenize_protein_sequences(tokenizer, batch['base pairs'], max_length=max_length)
     
     logger.info("Chunking input sequences")
     estrain_n_select, estrain_pads = complete_n_select(ecoli_strains, context_len)
