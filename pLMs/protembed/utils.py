@@ -12,7 +12,7 @@ def rt_dicts(path, strn_or_phg='strain', seq_report=False, test_mode=False):
     data = {}
     for fname in os.listdir(path):
         if fname.endswith(".faa"):
-            with open(os.path.join(path, fname)) as f:
+            with open(..., encoding='utf-8', errors='ignore') as f:
                 seq = "".join([line.strip() for line in f if not line.startswith(">")])
                 if test_mode:
                     seq = seq[:1000]  # truncate for test
