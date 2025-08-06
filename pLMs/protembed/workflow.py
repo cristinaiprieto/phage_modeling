@@ -105,6 +105,8 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     logger.info('tokenizer and model defined')
 
     def tokenize_func(batch, max_length=context_len):
+        if model_name == "ProtT5":
+            batch = [" ".join(seq) for seq in batch]
         return tokenize_protein_sequences(tokenizer, batch, max_length=max_length)
     
     logger.info("Chunking input sequences")
