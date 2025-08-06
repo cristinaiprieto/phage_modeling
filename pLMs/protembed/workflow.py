@@ -68,7 +68,7 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
 
     with torch.no_grad():
         for batch in dataloader:
-            tokenize_func([item["base_pairs"] for item in batch])
+            tokenize_func(batch)
             tokenized = {k: v.to(device) for k, v in tokenized.items()}
 
             outputs = model(**tokenized)
