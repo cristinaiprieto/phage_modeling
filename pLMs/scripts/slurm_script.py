@@ -123,7 +123,7 @@ def main():
     # parser.add_argument('--output', required=True)
     # see ESM2_embeddings_by_dir
 
-    parser.add_argument('--model_name', type=str, default='ProtT5', help='Name of the model (e.g., ProtT5, ESM2)')
+    parser.add_argument('--model_name', type=str, default='ESM2', help='Name of the model (e.g., ProtT5, ESM2)')
     # parser.add_argument('--batch_size', type=int, default=8)
 
     parser.add_argument('--account', default='ac_mak')

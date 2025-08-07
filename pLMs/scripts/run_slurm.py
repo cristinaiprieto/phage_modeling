@@ -12,7 +12,7 @@ import argparse
 def main():
     
     parser = argparse.ArgumentParser(description="Run SLURM submission script.")
-    parser.add_argument('--model_name', type=str, default='ProtT5', help='Model name to use, e.g. ProtT5 or ESM2')
+    parser.add_argument('--model_name', type=str, default='ESM2', help='Model name to use, e.g. ProtT5 or ESM2')
     args = parser.parse_args()
     model_name = args.model_name
     phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"
