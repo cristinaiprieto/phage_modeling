@@ -18,7 +18,7 @@ def get_model_and_tokenizer(model_name):
         tokenizer = T5Tokenizer.from_pretrained("Rostlab/prot_t5_xl_uniref50", do_lower_case=False)
         logger.info("Tokenizer ready.")
     elif model_name == "ESM2":
-        esm_model_id = "facebook/esm2_t6_8M_UR50D"  # or swap for a larger one
+        esm_model_id = "facebook/esm2_t6_8M_UR50D" 
         logger.info("ESM2 model selected.")
         tokenizer = AutoTokenizer.from_pretrained(esm_model_id, do_lower_case=False)
         model = AutoModel.from_pretrained(esm_model_id).eval()
@@ -32,6 +32,7 @@ def tokenize_protein_sequences(tokenizer, sequences, max_length=1024):
     """
     Tokenize protein sequences.
     """
+    #tokenizer.batch_encode_plus()
     return tokenizer(
         sequences,
         return_tensors="pt",
@@ -70,9 +71,12 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
         for batch in dataloader:
             tokenized = tokenize_func(batch)
             tokenized = {k: v.to(device) for k, v in tokenized.items()}
+            logger.info("Batch before tokenize:", batch)
+            logger.info("Tokenized output:", tokenized)
 
             outputs = model(**tokenized)
             last_hidden = outputs.last_hidden_state
+            logger.info("last_hidden shape:", outputs.last_hidden_state.shape)
 
             if model_name == "ESM2":
                 # Use [CLS] token (token at index 0)
@@ -94,6 +98,7 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     """
     ecoli_strains = rt_dicts(path=strain_in, seq_report=True, test_mode=test_mode)
     ecoli_phages = rt_dicts(path=phage_in, strn_or_phg='phage', seq_report=True, test_mode=test_mode)
+    logger.info(len(ecoli_strains), len(ecoli_phages)) # should not be zero
 
     logger.info('ecoli strains and phages defined')
 
@@ -110,6 +115,8 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     
     logger.info("Chunking input sequences")
     estrain_n_select, estrain_pads = complete_n_select(ecoli_strains, context_len)
+    logger.info(list(estrain_n_select.values()))  # should not be empty
+
     ephage_n_select, ephage_pads = complete_n_select(ecoli_phages, context_len)
 
     logger.info("Extracting strain embeddings")
@@ -119,6 +126,8 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     ephage_embed = extract_embeddings(list(ephage_n_select.values()), context_len, tokenize_func, model, model_name, test_mode=test_mode)
 
     logger.info("Saving embeddings to output directories")
+    logger.info("strain:", estrain_embed.shape)
+    logger.info("phage:", ephage_embed.shape)
     save_to_dir(strain_out, embeddings=estrain_embed, pads=estrain_pads, strn_or_phage='strain')
     save_to_dir(phage_out, embeddings=ephage_embed, pads=ephage_pads, strn_or_phage='phage')
 
