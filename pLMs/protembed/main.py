@@ -6,6 +6,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from workflow import embedding_workflow
+from esm2_func import run
 
 import logging
 
@@ -36,18 +37,20 @@ def main():
 
     args = parser.parse_args()
 
-    embedding_workflow(
-        model_name=args.model_name,
-        context_len=args.context_len,
-        # strain_in=args.strain_in,
-        # strain_out=args.strain_out,
-        # phage_in=args.phage_in,
-        # phage_out=args.phage_out,
-        input_dir=args.input_dir,
-        output_dir=args.output_dir,
-        early_exit=args.early_exit,
-        test_mode=args.test_mode
-    )
+    # embedding_workflow(
+    #     model_name=args.model_name,
+    #     context_len=args.context_len,
+    #     # strain_in=args.strain_in,
+    #     # strain_out=args.strain_out,
+    #     # phage_in=args.phage_in,
+    #     # phage_out=args.phage_out,
+    #     input_dir=args.input_dir,
+    #     output_dir=args.output_dir,
+    #     early_exit=args.early_exit,
+    #     test_mode=args.test_mode
+    # )
+
+    run(args)
 
 if __name__ == "__main__":
     main()
