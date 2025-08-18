@@ -71,8 +71,8 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
     all_embeddings = []
 
     if model_name == "ESM2":
-        # Use Meta ESM batch converter; tokenize_func is the batch_converter callable
-        batch_converter = tokenize_func  # callable that accepts list[(label, seq)]
+        # tokenize_func is the batch_converter callable and accepts list[(label, seq)]
+        batch_converter = tokenize_func
         with torch.no_grad():
             for start in range(0, len(sequences), batch_size):
                 sub = sequences[start:start + batch_size]
@@ -87,20 +87,20 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
                 # Mean pool across residues (exclude special tokens: index 0 is BOS)
                 for i, s in enumerate(strs):
                     L = min(len(s), context_len)  # respect truncation length
-                    # residues from 1..L inclusive (skip BOS)
+                    # residues from 1 to L inclusive (skip BOS)
                     emb = reps[i, 1:L + 1].mean(0).detach().cpu().numpy()
                     all_embeddings.append(emb)
 
         return np.vstack(all_embeddings) if all_embeddings else np.empty((0, model.embed_dim))
 
     else:
-        # ProtT5 (HuggingFace)
+        # ProtT5 
         dataset = SequenceDataset(sequences)
         dataloader = DataLoader(dataset, batch_size=batch_size, collate_fn=string_collate_fn)
 
         with torch.no_grad():
             for batch in dataloader:
-                # ProtT5 expects space-separated characters
+                # ProtT5 data pre-processing
                 spaced = [" ".join(seq) for seq in batch]
                 tokenized = tokenize_protein_sequences(tokenize_func, spaced, max_length=context_len)
                 tokenized = {k: v.to(device) for k, v in tokenized.items()}
@@ -146,10 +146,10 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     phage_chunks  = [chunk for chunks in ephage_n_select.values()  for chunk in chunks]
 
     if model_name == "ESM2":
-        # For ESM2, tokenize_func is the batch_converter callable returned above
+        # For ESM2, tokenize_func is batch_converter callable returned above
         tokenize_func = tokenizer_or_converter
     else:
-        # For ProtT5, tokenize_func is the HF tokenizer
+        # For ProtT5, tokenize_func is HF tokenizer
         tokenize_func = tokenizer_or_converter
 
     logger.info(f"Extracting strain embeddings from {len(strain_chunks)} chunks")
