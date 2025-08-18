@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader, Dataset
 import numpy as np
 from transformers import T5Tokenizer, T5EncoderModel
 from utils import save_to_dir_esm, save_to_dir_prott5, rt_dicts, complete_n_select
-from esm2_func import from_file
+# from esm2_func import from_file
 import logging
 import esm
 
