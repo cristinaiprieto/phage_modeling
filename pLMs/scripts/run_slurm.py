@@ -18,6 +18,8 @@ def main():
     phage_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/phage_AAs"
     strain_input_fasta = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
     strain_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/strain"
+    input_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/proteins/strain_AAs"
+    output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/strain"
     phage_output_dir = "/global/scratch/users/ciprietowitvoet/pLMs/output_embeddings/phage"
     root_dir = "/global/home/users/ciprietowitvoet/pLM/phage_modeling"
     script = "/global/home/users/ciprietowitvoet/pLM/phage_modeling/pLMs/protembed/main.py"
@@ -28,7 +30,7 @@ def main():
     account = "ac_mak"
     partition = "es1" 
     qos = "es_normal"  
-    gpu = "gpu:H100:1" 
+    gpu = "gpu:A100:1" 
 
     # =============================================
     # WORKFLOW PARAMETERS
@@ -45,10 +47,12 @@ def main():
         "python3", script_name,
         
         # Required arguments for embedding script
-        "--phage_in", phage_input_fasta,
-        "--strain_in", strain_input_fasta,
-        "--strain_out", strain_output_dir,
-        "--phage_out", phage_output_dir,
+        # "--phage_in", phage_input_fasta,
+        # "--strain_in", strain_input_fasta,
+        # "--strain_out", strain_output_dir,
+        # "--phage_out", phage_output_dir,
+        "--input_dir", input_dir,
+        "--output_dir", output_dir,
         "--model_name", model_name,
         # "--batch_size", batch_size,
         

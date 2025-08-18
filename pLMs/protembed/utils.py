@@ -35,7 +35,7 @@ def _clean_protein(seq: str, test_mode: bool = False) -> str:
         s = s[:1000]
     return s
 
-def rt_dicts(path: str, strn_or_phg: str = 'strain', seq_report: bool = False, test_mode: bool = False) -> Dict[str, Dict[str, str]]:
+def rt_dicts(path: str,  seq_report: bool = False, test_mode: bool = False) -> Dict[str, Dict[str, str]]:
     """
     Read all FASTA/FAA in a directory via Biopython like ESM2 does and
     return {filename_without_ext: {"base_pairs": cleaned_sequence}}.
@@ -60,19 +60,26 @@ def rt_dicts(path: str, strn_or_phg: str = 'strain', seq_report: bool = False, t
             key = os.path.splitext(fname)[0]  # drop extension
             data[key] = {"base_pairs": clean}
             if seq_report:
-                logger.info(f"[{strn_or_phg}] {fname}: {len(clean)} aa after cleaning")
+                logger.info(f"{fname}: {len(clean)} aa after cleaning")
         except Exception as e:
             logger.error(f"Failed parsing {fpath}: {e}")
 
     return data
 
-def save_to_dir(path: str, embeddings, pads, strn_or_phage: str):
+def save_to_dir_esm(path: str, embeddings):
     """
     Save embeddings + pad info.
     """
     os.makedirs(path, exist_ok=True)
-    torch.save(embeddings, os.path.join(path, f"{strn_or_phage}_embeddings.pt"))
-    torch.save(pads, os.path.join(path, f"{strn_or_phage}_pads.pt"))
+    torch.save(embeddings, os.path.join(path, "embeddings.pt"))
+
+def save_to_dir_prott5(path: str, embeddings, pads):
+    """
+    Save embeddings + pad info.
+    """
+    os.makedirs(path, exist_ok=True)
+    torch.save(embeddings, os.path.join(path, "embeddings.pt"))
+    torch.save(pads, os.path.join(path, "pads.pt"))
 
 def complete_n_select(data_dict: Dict[str, Dict[str, str]], context_len: int) -> Tuple[Dict[str, list], Dict[str, list]]:
     """

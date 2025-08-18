@@ -13,11 +13,11 @@ from datetime import datetime
 class ProteinPipelineConfig():
     def __init__(self, args):
         self.args = args
-        strain_output_dir = args.strain_out
-        phage_output_dir = args.phage_out
+        output_dir = args.output_dir
+        # phage_output_dir = args.phage_out
         self.completion_markers = {
-            1: os.path.join(phage_output_dir, "phage_embedding_complete.txt"),
-            2: os.path.join(strain_output_dir, "strain_embedding_complete.txt")
+            1: os.path.join(output_dir, "embedding_complete.txt"),
+            # 2: os.path.join(strain_output_dir, "strain_embedding_complete.txt")
         }
         self.stage_names = {
             1: "Embedding", 
@@ -90,16 +90,13 @@ cd {args.root_dir}
 mkdir -p logs
 echo "Running embedding script..."
 conda run -p $SCRATCH_ENV_PATH python3 {args.script} \\
-    --strain_in {args.strain_in} \\
-    --phage_in {args.phage_in} \\
-    --strain_out {args.strain_out} \\
-    --phage_out {args.phage_out} \\
+    --input_dir {args.input_dir} \\
+    --output_dir {args.output_dir} \\
     --model_name {args.model_name} \\
 
 if [ $? -eq 0 ]; then
     echo "Workflow completed successfully."
-    touch {args.strain_out}/strain_embedding_complete.txt
-    touch {args.phage_out}/phage_embedding_complete.txt
+    touch {args.output_dir}/embedding_complete.txt
 else
     echo "Workflow failed. Completion markers not created."
 fi
@@ -114,10 +111,12 @@ echo "Completed: $(date)"
 
 def main():
     parser = argparse.ArgumentParser(description="Submit protein embedding SLURM job")
-    parser.add_argument('--strain_in', required=True)
-    parser.add_argument('--phage_in', required=True)
-    parser.add_argument('--strain_out', required=True)
-    parser.add_argument('--phage_out', required=True)
+    # parser.add_argument('--strain_in', required=True)
+    # parser.add_argument('--phage_in', required=True)
+    # parser.add_argument('--strain_out', required=True)
+    # parser.add_argument('--phage_out', required=True)
+    parser.add_argument('--input_dir', required=True)
+    parser.add_argument('--output_dir', required=True)
 
     # parser.add_argument('--output_npz', required=True)
     # parser.add_argument('--output', required=True)

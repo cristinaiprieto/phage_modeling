@@ -2,7 +2,8 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 import numpy as np
 from transformers import T5Tokenizer, T5EncoderModel
-from utils import save_to_dir, rt_dicts, complete_n_select
+from utils import save_to_dir_esm, save_to_dir_prott5, rt_dicts, complete_n_select
+from esm2_func import from_file
 import logging
 import esm
 
@@ -121,13 +122,15 @@ def extract_embeddings(sequences, context_len, tokenize_func, model, model_name,
 
 # Workflow
 
-def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in, phage_out, early_exit=False, test_mode=False):
+def embedding_workflow(model_name, context_len, input_dir, output_dir, early_exit=False, test_mode=False):
     """
     Runs the pLM workflow to extract embeddings.
     """
-    ecoli_strains = rt_dicts(path=strain_in, seq_report=True, test_mode=test_mode)
-    ecoli_phages  = rt_dicts(path=phage_in,  strn_or_phg='phage', seq_report=True, test_mode=test_mode)
-    logger.info(f"Loaded {len(ecoli_strains)} strains, {len(ecoli_phages)} phages")
+    logger.info(f"Loading sequences")
+    seqs = rt_dicts(path=input_dir, seq_report=True, test_mode=test_mode)
+    # ecoli_strains = rt_dicts(path=strain_in, seq_report=True, test_mode=test_mode)
+    # ecoli_phages  = rt_dicts(path=phage_in,  strn_or_phg='phage', seq_report=True, test_mode=test_mode)
+    logger.info(f"Loaded {len(seqs)} sequences")
 
     if early_exit:
         logger.info("Early exit triggered.")
@@ -137,33 +140,33 @@ def embedding_workflow(model_name, context_len, strain_in, strain_out, phage_in,
     logger.info('Model + tokenizer/converter ready')
 
     # Chunk into <= context_len pieces (strings)
-    logger.info("Chunking input sequences")
-    estrain_n_select, estrain_pads = complete_n_select(ecoli_strains, context_len)
-    ephage_n_select,  ephage_pads  = complete_n_select(ecoli_phages,  context_len)
+    if model_name == "ProtT5":
+        logger.info("Chunking input sequences for ProtT5")
+        seq_n_select, seq_pads = complete_n_select(seqs, context_len)
 
-    # Flatten chunks to a single list for each group
-    strain_chunks = [chunk for chunks in estrain_n_select.values() for chunk in chunks]
-    phage_chunks  = [chunk for chunks in ephage_n_select.values()  for chunk in chunks]
-
-    if model_name == "ESM2":
-        # For ESM2, tokenize_func is batch_converter callable returned above
-        tokenize_func = tokenizer_or_converter
+        # Flatten chunks to a single list for each group
+        seq_chunks = [chunk for chunks in seq_n_select.values() for chunk in chunks]
+        # phage_chunks  = [chunk for chunks in ephage_n_select.values()  for chunk in chunks]
     else:
-        # For ProtT5, tokenize_func is HF tokenizer
-        tokenize_func = tokenizer_or_converter
+        seq_chunks = seqs
 
-    logger.info(f"Extracting strain embeddings from {len(strain_chunks)} chunks")
-    estrain_embed = extract_embeddings(
-        strain_chunks, context_len, tokenize_func, model, model_name, test_mode=test_mode
+    tokenize_func = tokenizer_or_converter
+
+    logger.info(f"Extracting strain embeddings from {len(seq_chunks)} chunks")
+    embed = extract_embeddings(
+        seq_chunks, context_len, tokenize_func, model, model_name, test_mode=test_mode
     )
 
-    logger.info(f"Extracting phage embeddings from {len(phage_chunks)} chunks")
-    ephage_embed = extract_embeddings(
-        phage_chunks, context_len, tokenize_func, model, model_name, test_mode=test_mode
-    )
+    # logger.info(f"Extracting phage embeddings from {len(phage_chunks)} chunks")
+    # ephage_embed = extract_embeddings(
+    #     phage_chunks, context_len, tokenize_func, model, model_name, test_mode=test_mode
+    # )
 
-    logger.info(f"Saving embeddings: strain {estrain_embed.shape}, phage {ephage_embed.shape}")
-    save_to_dir(strain_out, embeddings=estrain_embed, pads=estrain_pads, strn_or_phage='strain')
-    save_to_dir(phage_out,  embeddings=ephage_embed,  pads=ephage_pads,  strn_or_phage='phage')
+    logger.info(f"Saving embeddings: strain {embed.shape}")
+    if model_name=='ESM2':
+        save_to_dir_esm()
+    else:
+        save_to_dir_prott5(output_dir, embeddings=embed, pads=seq_pads)
+        # save_to_dir(phage_out,  embeddings=ephage_embed,  pads=ephage_pads,  strn_or_phage='phage')
 
     logger.info("Embedding workflow complete.")
