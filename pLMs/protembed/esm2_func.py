@@ -64,7 +64,7 @@ class FastaBatchedDataset(object):
     def __getitem__(self, idx):
         return self.sequence_labels[idx], self.sequence_strs[idx]
 
-    def get_batch_indices(self, toks_per_batch, extra_toks_per_seq=0):
+    def get_batch_indices(self, toks_per_batch=4096, extra_toks_per_seq=0):
         sizes = [(len(s), i) for i, s in enumerate(self.sequence_strs)]
         sizes.sort()
         batches = []
@@ -180,7 +180,7 @@ def run(args):
     torch.set_num_threads(args.num_threads)
     
     # Load model
-    model, alphabet = pretrained.load_model_and_alphabet(args.model_location)
+    model, alphabet = pretrained.load_model_and_alphabet("esm2_t33_650M_UR50D")
     model.eval()
     if isinstance(model, MSATransformer):
         raise ValueError("This script currently does not handle models with MSA input (MSA Transformer).")
@@ -189,52 +189,52 @@ def run(args):
         print("Transferred model to GPU")
     
     # Create output directory
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    # args.output_dir.mkdir(parents=True, exist_ok=True)
     
     # Load strain IDs from CSV file
-    try:
-        df = pd.read_csv(args.csv_file)
-        if args.id_column not in df.columns:
-            raise ValueError(f"Column '{args.id_column}' not found in CSV file")
+    # try:
+    #     df = pd.read_csv(args.csv_file)
+    #     if args.id_column not in df.columns:
+    #         raise ValueError(f"Column '{args.id_column}' not found in CSV file")
         
-        csv_strain_ids = set(df[args.id_column].unique())
-        print(f"Found {len(csv_strain_ids)} unique strain IDs in CSV")
-    except Exception as e:
-        print(f"Error reading CSV file: {e}")
-        return
+    #     csv_strain_ids = set(df[args.id_column].unique())
+    #     print(f"Found {len(csv_strain_ids)} unique strain IDs in CSV")
+    # except Exception as e:
+    #     print(f"Error reading CSV file: {e}")
+    #     return
     
     # Find all available .faa files in the input directory
     input_files = glob.glob(os.path.join(args.input_dir, "*.faa"))
-    available_strains = {os.path.splitext(os.path.basename(f))[0] for f in input_files}
+    available_seqs = {os.path.splitext(os.path.basename(f))[0] for f in input_files}
     
     # Find strains that exist in both CSV and input directory
-    strains_to_process = csv_strain_ids.intersection(available_strains)
-    missing_strains = csv_strain_ids - available_strains
+    # strains_to_process = csv_strain_ids.intersection(available_strains)
+    # missing_strains = csv_strain_ids - available_strains
     
-    if missing_strains:
-        print(f"Warning: {len(missing_strains)} strains from CSV not found in input directory")
-        if len(missing_strains) <= 10:
-            print(f"Missing strains: {', '.join(missing_strains)}")
-        else:
-            print(f"First 10 missing strains: {', '.join(list(missing_strains)[:10])}")
+    # if missing_strains:
+    #     print(f"Warning: {len(missing_strains)} strains from CSV not found in input directory")
+    #     if len(missing_strains) <= 10:
+    #         print(f"Missing strains: {', '.join(missing_strains)}")
+    #     else:
+    #         print(f"First 10 missing strains: {', '.join(list(missing_strains)[:10])}")
     
     # Check which strains are already processed
     already_processed = []
     to_process = []
     
-    for strain_id in strains_to_process:
-        output_file = args.output_dir / f"{strain_id}.npy"
+    for seq_id in available_seqs:
+        output_file = args.output_dir / f"{seq_id}.npy"
         if os.path.exists(output_file):
-            already_processed.append(strain_id)
+            already_processed.append(seq_id)
         else:
-            to_process.append(strain_id)
+            to_process.append(seq_id)
     
     # Print summary before processing
     print("\nSummary:")
-    print(f"Total strains in CSV: {len(csv_strain_ids)}")
-    print(f"Strains found in input directory: {len(strains_to_process)}")
+    # print(f"Total strains in CSV: {len(csv_strain_ids)}")
+    print(f"Strains found in input directory: {len(seq_id)}")
     print(f"Strains already processed: {len(already_processed)}")
-    print(f"Strains to process: {len(to_process)}")
+    print(f"Strains to procexss: {len(to_process)}")
     
     if not to_process:
         print("All available strains have already been processed. Nothing to do.")
